@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name='description' content='MJam_01 — a game built on vectorJuiceEngine.'>
+  <meta name='author' content='igobymj'>
+
+  <!-- Mobile viewport -->
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+
+  <!-- Bootstrap is used for layout and non-game page elements -->
+  <link rel="stylesheet" type="text/css" href="./public/styles/bootstrap.min.css">
+
+  <!-- Font import from CDN -->
+  <link href="https://fonts.cdnfonts.com/css/hyperspace" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="./public/styles/index.css">
+
+</head>
+
+<body>
+
+  <div class="juiceteroid_container">
+    <!-- Nav Bar -->
+    <nav>
+      <div class="nav nav-tabs nav-tabs-custom" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-canvas-tab" data-bs-toggle="tab" data-bs-target="#nav-canvas"
+          type="button" role="tab" aria-controls="nav-canvas" aria-selected="true">
+          <h1>MJAM_01</h1>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Nav Bar Content-->
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-canvas" role="tabpanel" aria-labelledby="nav-canvas">
+
+        <!-- Game Canvas -->
+        <div class="row">
+          <div class="col-3 juice-controller" id="juice-col">
+            <div id="juice-menu">
+              <!--Juice controls are injected here by MJamJuiceGuiManager-->
+            </div>
+          </div>
+          <div class="col-9 canvas-col" id="canvas-col">
+            <div id="canvas"></div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="row" style="margin-top: 2rem;">
+          <div class="twelve columns">
+            <div id="juice-log">
+              <p>MJam_01</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JAVASCRIPT IMPORTS -->
+  <!-- Bootstrap for form and nav elements-->
+  <script type="text/javascript" src="./public/scripts/libs/bootstrap/bootstrap.bundle.min.js"></script>
+
+  <!-- Tone.js for audio synthesis -->
+  <script src="https://cdn.jsdelivr.net/npm/tone@14/build/Tone.js"></script>
+
+  <!-- P5 is used for rendering -->
+  <script type="module" src="./public/scripts/libs/p5/p5.js"></script>
+
+  <!-- entry point of application -->
+  <script type="module" src="./public/scripts/index.js"></script>
+</body>
+
+</html>
