@@ -51,30 +51,15 @@ export default class InputManager extends Manager {
         }
     }
 
-    // for one-shot keypresses
+    // for one-shot keypresses e.g. cheats, debug, etc.
     keyInput(keyInputValue) {
-        // fire bullet (only when ship is alive)
-        if ((keyInputValue === "Enter" || keyInputValue === "Shift") && this.gameSession.shipManager.ship.shipAlive) {
-            this.gameSession.shipManager.ship.fireBullet();
-        }
+        // example for keyInput one shots:
+        // if ((keyInputValue === "Enter" || keyInputValue === "Shift") {
+        //     this.gameSession.shipManager.ship.fireBullet();
+        // }
 
         /**** CHEAT CODES AND DEBUG ****/
-        if (keyInputValue === "p") {
-            let nullObject = new NullGameObject(this.gameSession, this.gameSession.p5.createVector(250, 250));
-            this.gameSession.juiceEventManager.addNew("particleTester", nullObject);
-        }
 
-        if (keyInputValue === 'z') {
-            let nullObject = new NullGameObject(this.gameSession, this.gameSession.p5.createVector(300, 300));
-            this.gameSession.juiceEventManager.addNew("asteroidHit", nullObject);
-        }
-
-        // cheat code to switch eyeballs on and off (code is for a toggle)
-        if (keyInputValue === "g") {
-            let eyeBallFlag = this.gameSession.juiceSettings.container.eyeBallsOnAsteroids.eyeBalls.active;
-            eyeBallFlag = !eyeBallFlag;
-            this.gameSession.juiceSettings.updateJuice("eyeBallsOnAsteroids", "eyeBalls", "active", eyeBallFlag);
-        }
     }
 
 
