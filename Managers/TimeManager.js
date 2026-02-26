@@ -12,10 +12,10 @@
 */
 
 import Manager from "./Manager.js";
-import { DEFAULT_FRAME_RATE, DEFAULT_FIXED_RATE } from "../../game/gameplayConstants.js";
-// NOTE: DEFAULT_FRAME_RATE and DEFAULT_FIXED_RATE are engine-level constants
-// currently co-located with game constants for convenience
 
+// Engine-level timing defaults
+const DEFAULT_FRAME_RATE = 60;
+const DEFAULT_FIXED_RATE = 50;
 
 export default class TimeManager extends Manager {
 
@@ -24,8 +24,8 @@ export default class TimeManager extends Manager {
             return TimeManager.__instance;
         }
 
-		super(gameSession);
-		
+        super(gameSession);
+
         TimeManager.__instance = this;
 
         this.__instance = {}; //TimeManager
@@ -57,21 +57,21 @@ export default class TimeManager extends Manager {
         // Frame Count
         this.__frameCount = 0;
 
-        if( this.gameSession.verbose === true ) {
+        if (this.gameSession.verbose === true) {
             console.log("time Manager created successfully");
         }
     }
-    
-	update() {
+
+    update() {
         this.__time += this.__deltaTime;
-		this.__unscaledTime += this.__unscaledDeltaTime;
-		this.__fixedTime += this.__fixedDeltaTime;
+        this.__unscaledTime += this.__unscaledDeltaTime;
+        this.__fixedTime += this.__fixedDeltaTime;
         this.__frameCount++;
     }
 
     // takes a float from 0.0 to 1.0, applies that to slow time
     // duration is how long the effect lasts
-    setScale( timeScaler ) {
+    setScale(timeScaler) {
         this.timeScale = timeScaler;
     }
 
@@ -108,8 +108,8 @@ export default class TimeManager extends Manager {
     }
 
     get realTimeSinceStartup() {
-		this.__realTimeSinceStartup = performance.now() - this.__startTime;
-		return this.__realTimeSinceStartup;
+        this.__realTimeSinceStartup = performance.now() - this.__startTime;
+        return this.__realTimeSinceStartup;
     }
 
     get frameCount() {
