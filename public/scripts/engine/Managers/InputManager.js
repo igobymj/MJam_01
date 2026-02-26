@@ -8,7 +8,14 @@
 */
 
 import Manager from "./Manager.js";
-import NullGameObject from "../NullGameObject.js";
+import InputObject from "./InputObject.js";
+
+const DEADZONE = 0.2;
+
+// Returns 0 if the value is within the deadzone, otherwise returns it unchanged.
+function applyDeadzone(value) {
+    return Math.abs(value) < DEADZONE ? 0 : value;
+}
 
 export default class InputManager extends Manager {
 
@@ -21,13 +28,11 @@ export default class InputManager extends Manager {
 
         InputManager.__instance = this;
 
-        //currently unused
-        this.__inputObject = {};
+        this.__inputObject = new InputObject();
 
         if (this.gameSession.verbose === true) {
             console.log("input manager created successfully");
         }
-
     }
 
     update() {
@@ -39,15 +44,26 @@ export default class InputManager extends Manager {
         this.inputObject.forward = this.gameSession.p5.keyIsDown(87);
         this.inputObject.backward = this.gameSession.p5.keyIsDown(83);
 
-        // --- Gamepad (left stick, first connected controller) ---
-        const gamepads = navigator.getGamepads();
-        const gp = gamepads[0];
+        // --- Gamepad (first connected controller) ---
+        const gp = navigator.getGamepads()[0];
         if (gp) {
-            const deadzone = 0.2;
-            if (gp.axes[0] < -deadzone) this.inputObject.left = true;
-            if (gp.axes[0] > deadzone) this.inputObject.right = true;
-            if (gp.axes[1] < -deadzone) this.inputObject.forward = true;
-            if (gp.axes[1] > deadzone) this.inputObject.backward = true;
+            // Analog stick axes (deadzone applied)
+            this.inputObject.leftStick.x = applyDeadzone(gp.axes[0]);
+            this.inputObject.leftStick.y = applyDeadzone(gp.axes[1]);
+            this.inputObject.rightStick.x = applyDeadzone(gp.axes[2]);
+            this.inputObject.rightStick.y = applyDeadzone(gp.axes[3]);
+
+            // Drive digital booleans from left stick threshold (OR with keyboard)
+            if (this.inputObject.leftStick.x < 0) this.inputObject.left = true;
+            if (this.inputObject.leftStick.x > 0) this.inputObject.right = true;
+            if (this.inputObject.leftStick.y < 0) this.inputObject.forward = true;
+            if (this.inputObject.leftStick.y > 0) this.inputObject.backward = true;
+        } else {
+            // No gamepad — zero out analog fields
+            this.inputObject.leftStick.x = 0;
+            this.inputObject.leftStick.y = 0;
+            this.inputObject.rightStick.x = 0;
+            this.inputObject.rightStick.y = 0;
         }
     }
 
