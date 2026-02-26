@@ -15,6 +15,11 @@ let gameSession = new MJamSession();
 // Define how our p5 sketch will look
 var mjam = function (p) {
 
+	// p5 instance is available immediately when the sketch function runs —
+	// set it here so GameObjects can be safely constructed before setup().
+	gameSession.p5 = p;
+	gameSession.gameLoop.lateInitialize();
+
 	p.preload = function () {
 		// Load any assets or libraries
 	}

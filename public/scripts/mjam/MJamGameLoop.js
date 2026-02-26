@@ -22,16 +22,19 @@ export default class MJamGameLoop extends GameLoop {
 
 		const gs = this.gameSession;
 
-		// Player square
-		this.__playerSquare = new PlayerSquare(gs);
-
 		// Update order
 		this.addUpdateSystem("input", gs.inputManager, 10);
 		this.addUpdateSystem("juiceEvents", gs.juiceEventManager, 20);
-		this.addUpdateSystem("playerSquare", this.__playerSquare, 30);
 
 		// Render order
 		this.addRenderSystem("juiceEvents", gs.juiceEventManager, 10);
+	}
+
+	// Called from p.setup() after gameSession.p5 is assigned —
+	// GameObjects can only be constructed once p5 is live.
+	lateInitialize() {
+		this.__playerSquare = new PlayerSquare(this.gameSession);
+		this.addUpdateSystem("playerSquare", this.__playerSquare, 30);
 		this.addRenderSystem("playerSquare", this.__playerSquare, 20);
 	}
 }
