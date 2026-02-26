@@ -32,30 +32,22 @@ export default class InputManager extends Manager {
 
     update() {
 
-        // for held keypresses (WASD only — arrow keys conflict with UI sliders)
-        if (this.gameSession.p5.keyIsDown(65)) {
-            this.inputObject.left = true;
-        }
-        else {
-            this.inputObject.left = false;
-        }
-        if (this.gameSession.p5.keyIsDown(68)) {
-            this.inputObject.right = true;
-        }
-        else {
-            this.inputObject.right = false;
-        }
-        if (this.gameSession.p5.keyIsDown(87)) {
-            this.inputObject.forward = true;
-        }
-        else {
-            this.inputObject.forward = false;
-        }
-        if (this.gameSession.p5.keyIsDown(83)) {
-            this.inputObject.backward = true;
-        }
-        else {
-            this.inputObject.backward = false;
+        // --- Keyboard (WASD) ---
+        // Arrow keys are excluded — they conflict with UI sliders
+        this.inputObject.left = this.gameSession.p5.keyIsDown(65);
+        this.inputObject.right = this.gameSession.p5.keyIsDown(68);
+        this.inputObject.forward = this.gameSession.p5.keyIsDown(87);
+        this.inputObject.backward = this.gameSession.p5.keyIsDown(83);
+
+        // --- Gamepad (left stick, first connected controller) ---
+        const gamepads = navigator.getGamepads();
+        const gp = gamepads[0];
+        if (gp) {
+            const deadzone = 0.2;
+            if (gp.axes[0] < -deadzone) this.inputObject.left = true;
+            if (gp.axes[0] > deadzone) this.inputObject.right = true;
+            if (gp.axes[1] < -deadzone) this.inputObject.forward = true;
+            if (gp.axes[1] > deadzone) this.inputObject.backward = true;
         }
     }
 
