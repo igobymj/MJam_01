@@ -9,6 +9,7 @@
     
   By Weiqiang Chen
   Last Updated 5/07/22 by Eddie Melcer
+  slight changes by Michael John 2/26/26
 */
 
 import Manager from "./Manager.js";
