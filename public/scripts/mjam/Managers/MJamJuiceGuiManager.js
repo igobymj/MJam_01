@@ -1,6 +1,6 @@
 // MJamJuiceGuiManager.js
 // Schema-driven UI manager for MJam_01 juice controls.
-// Currently renders only the Cheats group (Juice FX toggle + Invincibility).
+// Currently renders only the Cheats group (Juice FX toggle + Sound On).
 // TODO: Add effect-specific schema entries here, or load from mjam-juice.json.
 
 export default class MJamJuiceGuiManager {
@@ -27,9 +27,10 @@ export default class MJamJuiceGuiManager {
                         type: "checkbox"
                     },
                     {
-                        label: "Invincibility",
-                        path: "container.cheats.ship.invincibility",
-                        type: "checkbox"
+                        label: "Sound On",
+                        path: "container.cheats.sound.on",
+                        type: "checkbox",
+                        onChange: (checked) => checked ? this.gameSession.startDrone() : this.gameSession.stopDrone()
                     }
                 ]
             }
@@ -216,6 +217,7 @@ export default class MJamJuiceGuiManager {
 
             input.addEventListener('change', (e) => {
                 this.setValue(item.path, e.target.checked);
+                if (item.onChange) item.onChange(e.target.checked);
                 if (e.target.checked && item.excludes) {
                     item.excludes.forEach(exPath => {
                         this.setValue(exPath, false);

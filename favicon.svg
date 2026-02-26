@@ -1,3 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <polygon points="28,16 4,4 7,13 7,19 4,28" fill="none" stroke="#fff" stroke-width="1.5" stroke-linejoin="round" transform="rotate(-90 16 16)"/>
+  <!-- Circle border -->
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#fff" stroke-width="1.5"/>
+  <!-- Sine wave clipped inside the circle -->
+  <clipPath id="c">
+    <circle cx="16" cy="16" r="13"/>
+  </clipPath>
+  <polyline
+    clip-path="url(#c)"
+    points="
+      2,16
+      4.5,10.3
+      7,16
+      9.5,21.7
+      12,16
+      14.5,10.3
+      17,16
+      19.5,21.7
+      22,16
+      24.5,10.3
+      27,16
+      29.5,21.7
+      32,16
+    "
+    fill="none"
+    stroke="#fff"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
 </svg>

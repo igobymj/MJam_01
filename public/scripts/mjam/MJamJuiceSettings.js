@@ -8,10 +8,15 @@ import JuiceSettings from "../engine/JuiceSettings.js";
 export default class MJamJuiceSettings extends JuiceSettings {
 
 	createDefaultContainer() {
-		// Start with only the base cheats — add game events here as you build them
 		const base = super.createDefaultContainer();
 		return {
-			...base
+			...base,
+			cheats: {
+				...base.cheats,
+				sound: {
+					on: true
+				}
+			}
 		};
 	}
 

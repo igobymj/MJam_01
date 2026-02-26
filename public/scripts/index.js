@@ -9,23 +9,21 @@ function resumeAudioContext() {
 document.addEventListener('click', resumeAudioContext);
 document.addEventListener('keydown', resumeAudioContext);
 
-// Instantiate our Game Session
+// Instantiate our Game Session (creates managers, does NOT register systems yet)
 let gameSession = new MJamSession();
 
-// Define how our p5 sketch will look
+// Define our p5 sketch
 var mjam = function (p) {
-
-	// p5 instance is available immediately when the sketch function runs —
-	// set it here so GameObjects can be safely constructed before setup().
-	gameSession.p5 = p;
-	gameSession.gameLoop.lateInitialize();
 
 	p.preload = function () {
 		// Load any assets or libraries
 	}
 
 	p.setup = function () {
-		// Get width and height of canvas div
+		// Make p5 available on the session
+		gameSession.p5 = p;
+
+		// Canvas sizing
 		let canvasDiv = document.getElementById('canvas');
 		let canvasStyle = canvasDiv.currentStyle || window.getComputedStyle(canvasDiv);
 		let canvasWidth = parseFloat(canvasStyle.width);
@@ -46,14 +44,12 @@ var mjam = function (p) {
 		// Save canvas reference
 		gameSession.canvas = canvas;
 
-		// Time scale management
-		gameSession.timeManager.timeScale = 1;
-		gameSession.timeManager.frameRate = 60;
-		gameSession.timeManager.start();
-
 		// p5 configurations
 		p.frameRate(60);
 		p.imageMode(p.CENTER);
+
+		// Everything is ready — initialize all systems, game objects, GUI, and audio
+		gameSession.setup();
 	}
 
 	// Core update function
@@ -81,7 +77,8 @@ var mjam = function (p) {
 		}
 	}
 
-	p.keyPressed = function () {
+	p.keyPressed = function (event) {
+		if (event.repeat) return; // ignore auto-repeat
 		gameSession.inputManager.keyInput(p.key);
 	}
 
@@ -103,8 +100,5 @@ var mjam = function (p) {
 	}
 }
 
-// Instantiate p5 and attach to gameSession
-gameSession.p5 = new p5(mjam, 'canvas');
-
-// Initialize GUI
-gameSession.juiceGuiManager.initialize();
+// Instantiate p5 — this calls mjam(p) which calls p.setup() which calls gameSession.setup()
+new p5(mjam, 'canvas');

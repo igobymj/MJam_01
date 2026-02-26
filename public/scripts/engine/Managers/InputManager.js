@@ -69,10 +69,6 @@ export default class InputManager extends Manager {
 
     // for one-shot keypresses e.g. cheats, debug, etc.
     keyInput(keyInputValue) {
-        // example for keyInput one shots:
-        // if ((keyInputValue === "Enter" || keyInputValue === "Shift") {
-        //     this.gameSession.shipManager.ship.fireBullet();
-        // }
 
         /**** CHEAT CODES AND DEBUG ****/
 
